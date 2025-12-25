@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirkbridge Capital | Developing Enduring Businesses</title>
     
-    <!-- 1. Core Dependencies (UMD Versions for maximum compatibility) -->
+    <!-- Favicon: Geometric Bridge Monogram -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M8 24V8h3v16H8z' fill='%230A0A0A'/%3E%3Cpath d='M11 12c4-3 10-3 14 0v3c-4-3-10-3-14 0v-3z' fill='%234F7942'/%3E%3Cpath d='M21 24V14h3v10h-3z' fill='%230A0A0A'/%3E%3C/svg%3E">
+    
+    <!-- 1. Core Dependencies -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -54,9 +57,8 @@
         .line-accent.active { width: 100%; }
         html { scroll-behavior: smooth; }
         
-        /* Loading & Error States */
         #root:empty::before {
-            content: "Loading Kirkbridge Capital...";
+            content: "Initializing Kirkbridge Capital...";
             position: fixed;
             top: 50%;
             left: 50%;
@@ -66,32 +68,39 @@
             font-size: 1.1rem;
             letter-spacing: 0.05em;
         }
-        #error-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white; z-index: 9999;
-            padding: 40px; font-family: sans-serif;
-        }
     </style>
 </head>
 <body>
+    <noscript>
+        <div style="padding: 50px; text-align: center; font-family: serif;">
+            <h1>Kirkbridge Capital</h1>
+            <p>Please enable JavaScript to view our site.</p>
+        </div>
+    </noscript>
     <div id="root"></div>
-    <div id="error-overlay">
-        <h1 style="color: #0A0A0A; font-family: serif;">Initialization Error</h1>
-        <p id="error-message" style="color: #64748b;"></p>
-        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; border: 1px solid #0A0A0A; background: none; cursor: pointer;">Retry Loading</button>
-    </div>
 
     <script type="text/babel">
-        // Ensure React is available from the Window (UMD)
         const { useState, useEffect } = window.React;
+
+        const LogoIcon = ({ className = "w-8 h-8", primary = "#0A0A0A", accent = "#4F7942" }) => (
+            <svg viewBox="0 0 32 32" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Main Pillar */}
+                <path d="M8 24V8H11V24H8Z" fill={primary}/>
+                {/* Bridge Span Arc */}
+                <path d="M11 12C15 9 21 9 25 12V15C21 12 15 12 11 15V12Z" fill={accent}/>
+                {/* Secondary Pillar */}
+                <path d="M21 24V14H24V24H21Z" fill={primary}/>
+            </svg>
+        );
 
         const Navbar = ({ isScrolled }) => (
             <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${isScrolled ? 'bg-white/95 backdrop-blur-md py-4 border-slate-200' : 'bg-transparent py-8 border-transparent'}`}>
                 <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-                    <a href="#" className="text-2xl font-serif font-bold tracking-tight text-kirk-black">
-                        Kirkbridge<span className="text-fern">.</span>
+                    <a href="#" className="flex items-center space-x-3 group">
+                        <LogoIcon className={`w-8 h-8 transition-transform duration-500 ${isScrolled ? 'scale-90' : 'scale-100'}`} />
+                        <span className="text-2xl font-serif font-bold tracking-tight text-kirk-black">
+                            Kirkbridge<span className="text-fern">.</span>
+                        </span>
                     </a>
                     <div className="hidden md:flex space-x-12 items-center">
                         {['About', 'Philosophy', 'Foundation'].map(item => (
@@ -99,7 +108,7 @@
                                 {item}
                             </a>
                         ))}
-                        <a href="#contact" className="ml-4 px-6 py-2 border border-kirk-black hover:bg-fern hover:border-fern hover:text-white transition-all duration-300 font-sans text-sm uppercase tracking-widest">
+                        <a href="mailto:kevin@kirkbridgecap.com" className="ml-4 px-6 py-2 border border-kirk-black hover:bg-fern hover:border-fern hover:text-white transition-all duration-300 font-sans text-sm uppercase tracking-widest">
                             Contact
                         </a>
                     </div>
@@ -108,8 +117,11 @@
         );
 
         const Hero = () => (
-            <section className="relative min-h-screen flex items-center pt-20 px-6 md:px-12 bg-white">
-                <div className="max-w-7xl mx-auto w-full">
+            <section className="relative min-h-screen flex items-center pt-20 px-6 md:px-12 bg-white overflow-hidden">
+                {/* Subtle background element */}
+                <div className="absolute top-0 right-0 w-1/2 h-full bg-kirk-light/30 -skew-x-12 translate-x-1/4 z-0"></div>
+                
+                <div className="max-w-7xl mx-auto w-full relative z-10">
                     <div className="lg:col-span-8 animate-fade-in-up">
                         <span className="block text-fern font-sans text-sm font-semibold uppercase tracking-[0.3em] mb-8">Private Equity Excellence</span>
                         <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif leading-[1.1] tracking-tight text-kirk-black mb-12">
@@ -157,7 +169,7 @@
                             <h2 className="text-5xl md:text-6xl font-serif text-kirk-black mb-6">Our Philosophy</h2>
                             <p className="text-xl text-kirk-gray font-light">A commitment to excellence, powered by the belief that the strongest growth is organic and sustainable.</p>
                         </div>
-                        <div className="text-fern font-sans font-bold tracking-widest text-sm uppercase text-right">[ 01 / 03 ]</div>
+                        <div className="text-fern font-sans font-bold tracking-widest text-sm uppercase text-right text-slate-300">[ 01 / 03 ]</div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-slate-100">
                         {[
@@ -166,7 +178,7 @@
                             { title: "Integrity First", desc: "Our reputation is our most valuable asset. Transparency and ethical leadership guide every transaction." }
                         ].map((pillar, idx) => (
                             <div key={idx} className={`py-16 md:px-10 border-b md:border-b-0 border-slate-100 group hover:bg-kirk-light transition-colors duration-500 ${idx !== 2 ? 'md:border-r' : ''}`}>
-                                <span className="block text-xs font-sans text-fern mb-8 tracking-widest uppercase">Pillar 0{idx + 1}</span>
+                                <span className="block text-xs font-sans text-fern mb-8 tracking-widest uppercase font-semibold">Pillar 0{idx + 1}</span>
                                 <h3 className="text-2xl font-serif text-kirk-black mb-6 group-hover:translate-x-2 transition-transform duration-300">{pillar.title}</h3>
                                 <p className="text-kirk-gray leading-relaxed font-light">{pillar.desc}</p>
                             </div>
@@ -180,15 +192,15 @@
             <section id="foundation" className="reveal py-32 px-6 md:px-12 bg-kirk-black text-white">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                        <div className="lg:col-span-6 relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Architecture" className="w-full h-auto opacity-40 grayscale" />
+                        <div className="lg:col-span-6 relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Architecture" className="w-full h-auto opacity-40 grayscale group-hover:scale-105 transition-transform duration-[3s] ease-out" />
                             <div className="absolute inset-0 bg-gradient-to-t from-kirk-black to-transparent"></div>
                         </div>
                         <div className="lg:col-span-6">
                             <h2 className="text-5xl font-serif mb-12">The Foundation</h2>
                             <div className="space-y-8 text-lg font-light text-slate-400 leading-relaxed">
                                 <p>At Kirkbridge Capital, we believe that the strength of any enterprise lies in its foundation. Our multi-disciplinary team brings together decades of experience from global law firms, Silicon Valley tech giants, and Wall Street institutions.</p>
-                                <p>This cross-functional expertise allows us to perform deeper due diligence and identify hidden synergies that traditional firms might overlook. We aren't just financiers; we are engineers of growth.</p>
+                                <p>This cross-functional expertise allows us to perform deeper due diligence and identify hidden synergies that traditional firms might overlook. We don't just bridge markets; we build the pillars that hold them.</p>
                             </div>
                         </div>
                     </div>
@@ -201,21 +213,24 @@
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
                         <div className="md:col-span-2">
-                            <h2 className="text-3xl font-serif font-bold text-kirk-black mb-8">Kirkbridge Capital<span className="text-fern">.</span></h2>
+                            <div className="flex items-center space-x-3 mb-8">
+                                <LogoIcon className="w-10 h-10" />
+                                <h2 className="text-3xl font-serif font-bold text-kirk-black">Kirkbridge Capital<span className="text-fern">.</span></h2>
+                            </div>
                             <p className="text-kirk-gray font-light max-w-sm leading-loose">Building the future of industry through disciplined capital allocation and strategic operational support.</p>
                         </div>
                         <div>
                             <h4 className="text-xs uppercase tracking-[0.3em] font-bold text-kirk-black mb-8">Inquiries</h4>
                             <ul className="space-y-4 text-kirk-gray font-light">
-                                <li><a href="mailto:kevin@kirkbridgecap.com" className="hover:text-fern transition-colors font-medium">kevin@kirkbridgecap.com</a></li>
+                                <li><a href="mailto:kevin@kirkbridgecap.com" className="hover:text-fern transition-colors font-medium border-b border-transparent hover:border-fern pb-1">kevin@kirkbridgecap.com</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div className="mt-24 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-sans text-slate-400 uppercase tracking-widest">
-                        <p>&copy; {new Date().getFullYear()} Kirkbridge Capital Partners, LLC. All Rights Reserved.</p>
+                    <div className="mt-24 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-sans text-slate-400 uppercase tracking-widest font-medium">
+                        <p>&copy; {new Date().getFullYear()} Kirkbridge Capital Partners, LLC.</p>
                         <div className="flex space-x-8">
-                            <a href="#" className="hover:text-kirk-black transition-colors">Privacy</a>
-                            <a href="#" className="hover:text-kirk-black transition-colors">Terms</a>
+                            <a href="#" className="hover:text-kirk-black transition-colors">Privacy Policy</a>
+                            <a href="#" className="hover:text-kirk-black transition-colors">Terms of Service</a>
                         </div>
                     </div>
                 </div>
@@ -258,19 +273,8 @@
             );
         };
 
-        // Render with explicit error catching
-        try {
-            if (typeof window.ReactDOM === 'undefined') {
-                throw new Error("ReactDOM failed to load from unpkg. Check your internet connection or script order.");
-            }
-            const root = window.ReactDOM.createRoot(document.getElementById('root'));
-            root.render(<App />);
-            console.log("Kirkbridge App Initialized Successfully");
-        } catch (err) {
-            console.error("Critical Render Error:", err);
-            document.getElementById('error-overlay').style.display = 'block';
-            document.getElementById('error-message').innerText = err.message;
-        }
+        const root = window.ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
