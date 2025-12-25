@@ -5,10 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirkbridge Capital | Developing Enduring Businesses</title>
+    
+    <!-- Fonts & Styling -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & Babel for No-Build GitHub Pages Support -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -24,16 +32,13 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     animation: {
-                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'fade-in': 'fadeIn 1.5s ease-out forwards',
                         'fade-in-up': 'fadeInUp 1s ease-out forwards',
                     },
                     keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
                         fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                     },
@@ -42,40 +47,201 @@
         }
     </script>
     <style>
-        body {
-            background-color: #ffffff;
-            color: #0A0A0A;
-            -webkit-font-smoothing: antialiased;
-        }
-        .reveal {
-            opacity: 0;
-            transition: all 1s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .line-accent {
-            height: 1px;
-            background-color: #4F7942;
-            width: 0;
-            transition: width 1s ease-in-out;
-        }
-        .line-accent.active {
-            width: 100%;
-        }
+        body { background-color: #ffffff; color: #0A0A0A; -webkit-font-smoothing: antialiased; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .line-accent { height: 1px; background-color: #4F7942; width: 0; transition: width 1.5s ease-in-out; }
+        .line-accent.active { width: 100%; }
+        html { scroll-behavior: smooth; }
     </style>
 <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
 </head>
 <body>
     <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const Navbar = ({ isScrolled }) => (
+            <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${isScrolled ? 'bg-white/95 backdrop-blur-md py-4 border-slate-200' : 'bg-transparent py-8 border-transparent'}`}>
+                <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+                    <a href="#" className="text-2xl font-serif font-bold tracking-tight text-kirk-black">
+                        Kirkbridge<span className="text-fern">.</span>
+                    </a>
+                    <div className="hidden md:flex space-x-12 items-center">
+                        {['About', 'Philosophy', 'Foundation'].map(item => (
+                            <a key={item} href={`#${item.toLowerCase()}`} className="text-sm uppercase tracking-widest font-medium text-kirk-black/70 hover:text-fern transition-colors duration-300">
+                                {item}
+                            </a>
+                        ))}
+                        <a href="#contact" className="px-6 py-2 border border-kirk-black hover:bg-fern hover:border-fern hover:text-white transition-all duration-300 font-sans text-sm uppercase tracking-widest">
+                            Contact
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        );
+
+        const Hero = () => (
+            <section className="relative min-h-screen flex items-center pt-20 px-6 md:px-12 bg-white">
+                <div className="max-w-7xl mx-auto w-full">
+                    <div className="lg:col-span-8 animate-fade-in-up">
+                        <span className="block text-fern font-sans text-sm font-semibold uppercase tracking-[0.3em] mb-8">Private Equity Excellence</span>
+                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif leading-[1.1] tracking-tight text-kirk-black mb-12">
+                            Developing and growing <br />
+                            <span className="italic opacity-90">enduring</span> businesses.
+                        </h1>
+                        <div className="flex items-center space-x-8">
+                            <div className="w-12 h-[1px] bg-fern"></div>
+                            <p className="text-xl md:text-2xl font-sans text-kirk-gray font-light max-w-xl">
+                                Partnering with visionaries to build long-term value through discipline, integrity, and strategic foresight.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const About = () => (
+            <section id="about" className="reveal py-32 px-6 md:px-12 bg-kirk-light">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                        <div className="lg:col-span-4">
+                            <h2 className="text-4xl font-serif text-kirk-black">Our Firm</h2>
+                            <div className="line-accent mt-6"></div>
+                        </div>
+                        <div className="lg:col-span-8">
+                            <p className="text-3xl md:text-4xl font-sans font-light leading-relaxed text-kirk-black mb-12">
+                                Kirkbridge Capital is a private equity firm dedicated to the stewardship of growth. We bridge the gap between potential and performance.
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-kirk-gray leading-loose text-lg">
+                                <p>Founded on the principles of disciplined investment and operational excellence, we are interested in growth and development at every scale. Our approach is not just financial; it is holistic, focusing on the DNA of each enterprise we touch.</p>
+                                <p>We are backed by a multi-disciplinary team of elite professionals across tech, legal, and financial services. This diversity of thought allows us to navigate complex landscapes and technological shifts with precision.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Philosophy = () => (
+            <section id="philosophy" className="reveal py-32 px-6 md:px-12 bg-white">
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+                        <div className="max-w-2xl">
+                            <h2 className="text-5xl md:text-6xl font-serif text-kirk-black mb-6">Our Philosophy</h2>
+                            <p className="text-xl text-kirk-gray font-light">A commitment to excellence, powered by the belief that the strongest growth is organic and sustainable.</p>
+                        </div>
+                        <div className="text-fern font-sans font-bold tracking-widest text-sm uppercase">[ 01 / 03 ]</div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-slate-100">
+                        {[
+                            { title: "Enduring Value", desc: "We look beyond the quarterly report, investing in businesses that define their industries for decades." },
+                            { title: "Active Partnership", desc: "Capital is only the beginning. We provide the operational expertise and network to catalyze genuine growth." },
+                            { title: "Integrity First", desc: "Our reputation is our most valuable asset. Transparency and ethical leadership guide every transaction." }
+                        ].map((pillar, idx) => (
+                            <div key={idx} className={`py-16 md:px-10 border-b md:border-b-0 border-slate-100 group hover:bg-kirk-light transition-colors duration-500 ${idx !== 2 ? 'md:border-r' : ''}`}>
+                                <span className="block text-xs font-sans text-fern mb-8 tracking-widest uppercase">Pillar 0{idx + 1}</span>
+                                <h3 className="text-2xl font-serif text-kirk-black mb-6 group-hover:translate-x-2 transition-transform duration-300">{pillar.title}</h3>
+                                <p className="text-kirk-gray leading-relaxed font-light">{pillar.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Foundation = () => (
+            <section id="foundation" className="reveal py-32 px-6 md:px-12 bg-kirk-black text-white">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                        <div className="lg:col-span-6 relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Architecture" className="w-full h-auto opacity-40 grayscale" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-kirk-black to-transparent"></div>
+                        </div>
+                        <div className="lg:col-span-6">
+                            <h2 className="text-5xl font-serif mb-12">The Foundation</h2>
+                            <div className="space-y-8 text-lg font-light text-slate-400 leading-relaxed">
+                                <p>At Kirkbridge Capital, we believe that the strength of any enterprise lies in its foundation. Our multi-disciplinary team brings together decades of experience from global law firms, Silicon Valley tech giants, and Wall Street institutions.</p>
+                                <p>This cross-functional expertise allows us to perform deeper due diligence and identify hidden synergies that traditional firms might overlook. We aren't just financiers; we are engineers of growth.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Contact = () => (
+            <footer id="contact" className="reveal bg-white border-t border-slate-100 py-24 px-6 md:px-12">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                        <div className="md:col-span-2">
+                            <h2 className="text-3xl font-serif font-bold text-kirk-black mb-8">Kirkbridge Capital<span className="text-fern">.</span></h2>
+                            <p className="text-kirk-gray font-light max-w-sm leading-loose">Building the future of industry through disciplined capital allocation and strategic operational support.</p>
+                        </div>
+                        <div>
+                            <h4 className="text-xs uppercase tracking-[0.3em] font-bold text-kirk-black mb-8">Inquiries</h4>
+                            <ul className="space-y-4 text-kirk-gray font-light">
+                                <li><a href="mailto:kevin@kirkbridgecap.com" className="hover:text-fern transition-colors">kevin@kirkbridgecap.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="mt-24 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-sans text-slate-400 uppercase tracking-widest">
+                        <p>&copy; {new Date().getFullYear()} Kirkbridge Capital Partners, LLC. All Rights Reserved.</p>
+                        <div className="flex space-x-8">
+                            <a href="#" className="hover:text-kirk-black">Privacy</a>
+                            <a href="#" className="hover:text-kirk-black">Terms</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            const line = entry.target.querySelector('.line-accent');
+                            if (line) line.classList.add('active');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+                return () => {
+                    window.removeEventListener('scroll', handleScroll);
+                    observer.disconnect();
+                };
+            }, []);
+
+            return (
+                <div className="min-h-screen bg-white selection:bg-fern selection:text-white">
+                    <Navbar isScrolled={isScrolled} />
+                    <Hero />
+                    <About />
+                    <Philosophy />
+                    <Foundation />
+                    <Contact />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
