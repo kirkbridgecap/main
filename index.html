@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirkbridge Capital | Developing Enduring Businesses</title>
     
-    <!-- Core Dependencies -->
+    <!-- 1. Core Dependencies (UMD Versions for maximum compatibility) -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
+    <!-- 2. Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -47,37 +47,45 @@
         }
     </script>
     <style>
-        body { background-color: #ffffff; color: #0A0A0A; -webkit-font-smoothing: antialiased; }
+        body { background-color: #ffffff; color: #0A0A0A; -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .line-accent { height: 1px; background-color: #4F7942; width: 0; transition: width 1.5s ease-in-out; }
         .line-accent.active { width: 100%; }
         html { scroll-behavior: smooth; }
+        
+        /* Loading & Error States */
         #root:empty::before {
             content: "Loading Kirkbridge Capital...";
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: 'Playfair Display', serif;
             color: #64748b;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+        }
+        #error-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999;
+            padding: 40px; font-family: sans-serif;
         }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
-  }
-}
-</script>
 </head>
 <body>
     <div id="root"></div>
+    <div id="error-overlay">
+        <h1 style="color: #0A0A0A; font-family: serif;">Initialization Error</h1>
+        <p id="error-message" style="color: #64748b;"></p>
+        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; border: 1px solid #0A0A0A; background: none; cursor: pointer;">Retry Loading</button>
+    </div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        // Ensure React is available from the Window (UMD)
+        const { useState, useEffect } = window.React;
 
         const Navbar = ({ isScrolled }) => (
             <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${isScrolled ? 'bg-white/95 backdrop-blur-md py-4 border-slate-200' : 'bg-transparent py-8 border-transparent'}`}>
@@ -250,11 +258,18 @@
             );
         };
 
+        // Render with explicit error catching
         try {
-            const root = ReactDOM.createRoot(document.getElementById('root'));
+            if (typeof window.ReactDOM === 'undefined') {
+                throw new Error("ReactDOM failed to load from unpkg. Check your internet connection or script order.");
+            }
+            const root = window.ReactDOM.createRoot(document.getElementById('root'));
             root.render(<App />);
+            console.log("Kirkbridge App Initialized Successfully");
         } catch (err) {
-            console.error("Kirkbridge App failed to initialize:", err);
+            console.error("Critical Render Error:", err);
+            document.getElementById('error-overlay').style.display = 'block';
+            document.getElementById('error-message').innerText = err.message;
         }
     </script>
 </body>
