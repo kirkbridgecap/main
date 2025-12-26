@@ -1,24 +1,27 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirkbridge Capital | Developing Enduring Businesses</title>
-    
+
     <!-- Favicon: Geometric Bridge Monogram -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M8 24V8h3v16H8z' fill='%230A0A0A'/%3E%3Cpath d='M11 12c4-3 10-3 14 0v3c-4-3-10-3-14 0v-3z' fill='%234F7942'/%3E%3Cpath d='M21 24V14h3v10h-3z' fill='%230A0A0A'/%3E%3C/svg%3E">
-    
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMic+PHBhdGggZD0nTTggMjRWOGgzdjE2SDh6JyBmaWxsPScjMEEwQTBBJy8+PHBhdGggZD0nTTExIDEyYzQtMyAxMC0zIDE0IDB2M2MtNC0zLTEwLTMtMTQgMHYtM3onIGZpbGw9JyM0Rjc5NDInLz48cGF0aCBkPSdNMjEgMjRWMTRoM3YxMGgtM3onIGZpbGw9JyMwQTBBMEEnLz48L3N2Zz4=">
+
     <!-- 1. Core Dependencies -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- 2. Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -50,13 +53,40 @@
         }
     </script>
     <style>
-        body { background-color: #ffffff; color: #0A0A0A; -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .line-accent { height: 1px; background-color: #4F7942; width: 0; transition: width 1.5s ease-in-out; }
-        .line-accent.active { width: 100%; }
-        html { scroll-behavior: smooth; }
-        
+        body {
+            background-color: #ffffff;
+            color: #0A0A0A;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .line-accent {
+            height: 1px;
+            background-color: #4F7942;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .line-accent.active {
+            width: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         #root:empty::before {
             content: "Initializing Kirkbridge Capital...";
             position: fixed;
@@ -70,6 +100,7 @@
         }
     </style>
 </head>
+
 <body>
     <noscript>
         <div style="padding: 50px; text-align: center; font-family: serif;">
@@ -83,13 +114,13 @@
         const { useState, useEffect } = window.React;
 
         const LogoIcon = ({ className = "w-8 h-8", primary = "#0A0A0A", accent = "#4F7942" }) => (
-            <svg viewBox="0 0 32 32" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="32" height="32" viewBox="0 0 32 32" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
                 {/* Main Pillar */}
-                <path d="M8 24V8H11V24H8Z" fill={primary}/>
+                <path d="M8 24V8H11V24H8Z" fill={primary} />
                 {/* Bridge Span Arc */}
-                <path d="M11 12C15 9 21 9 25 12V15C21 12 15 12 11 15V12Z" fill={accent}/>
+                <path d="M11 12C15 9 21 9 25 12V15C21 12 15 12 11 15V12Z" fill={accent} />
                 {/* Secondary Pillar */}
-                <path d="M21 24V14H24V24H21Z" fill={primary}/>
+                <path d="M21 24V14H24V24H21Z" fill={primary} />
             </svg>
         );
 
@@ -120,7 +151,7 @@
             <section className="relative min-h-screen flex items-center pt-20 px-6 md:px-12 bg-white overflow-hidden">
                 {/* Subtle background element */}
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-kirk-light/30 -skew-x-12 translate-x-1/4 z-0"></div>
-                
+
                 <div className="max-w-7xl mx-auto w-full relative z-10">
                     <div className="lg:col-span-8 animate-fade-in-up">
                         <span className="block text-fern font-sans text-sm font-semibold uppercase tracking-[0.3em] mb-8">Private Equity Excellence</span>
@@ -277,4 +308,5 @@
         root.render(<App />);
     </script>
 </body>
+
 </html>
